@@ -34,8 +34,8 @@ const TasksPage: React.FC = () => {
 	if (error) {
 		return <div>Error: {error}</div>;
 	}
-
-	console.log(tasks);
+  console.log(tasks);
+  
 
 	return (
 		<div>

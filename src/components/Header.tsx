@@ -14,8 +14,8 @@ const HeaderMenu: React.FC = () => {
 					mode="horizontal"
 					items={[
 						{
-							key: "issues",
-							label: <Link to="/issues">Все задачи</Link>,
+							key: "/tasks",
+							label: <Link to="/tasks">Все задачи</Link>,
 						},
 						{
 							key: "boards",

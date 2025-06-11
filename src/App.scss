@@ -11,19 +11,24 @@
 	align-items: center;
 }
 
+.boardItem {
+	padding: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 1rem;
+}
+
 .taskItem {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  &:hover {
-    background-color: #f0f0f0;
-  }
-  &:active {
-    background-color: #e0e0e0;
-  }
+	@extend .boardItem;
+	cursor: pointer;
+	padding: 1rem;
+	&:hover {
+		background-color: #f0f0f0;
+	}
+	&:active {
+		background-color: #e0e0e0;
+	}
 }

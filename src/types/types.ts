@@ -16,3 +16,10 @@ export interface ITask {
 	boardId: number;
 	boardName: string;
 }
+
+export interface IBoards {
+	id: number;
+	name: string;
+	description: string;
+	taskCount: number;
+}
