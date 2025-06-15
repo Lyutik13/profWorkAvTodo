@@ -1,18 +1,23 @@
 type Priority = "Low" | "Medium" | "High";
 type InProgress = "Backlog" | "InProgress" | "Done";
 
-export interface ITask {
+interface IUser {
+	id: number;
+	fullName: string;
+	email: string;
+	avatarUrl: string;
+}
+
+export interface ITaskInBoard {
 	id: number;
 	title: string;
 	description: string;
 	priority: Priority;
 	status: InProgress;
-	assignee: {
-		id: number;
-		fullName: string;
-		email: string;
-		avatarUrl: string;
-	};
+	assignee: IUser;
+}
+
+export interface IAllTasks extends ITaskInBoard {
 	boardId: number;
 	boardName: string;
 }

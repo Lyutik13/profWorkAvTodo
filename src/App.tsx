@@ -1,13 +1,13 @@
 import "./App.scss";
-import '@ant-design/v5-patch-for-react-19';
+import "@ant-design/v5-patch-for-react-19";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
 
+import HeaderMenu from "./components/Header";
 import TasksPage from "./pages/TasksPage";
-import  BoardsPage  from "./pages/BoardsPage";
-import { BoardPage } from "./pages/BoardPage";
-import HeaderMenu from "./components/header";
+import BoardsPage from "./pages/BoardsPage";
+import BoardPageId from "./pages/BoardPageId";
 
 const { Content } = Layout;
 
@@ -17,11 +17,11 @@ export default function App() {
 			<Layout>
 				<HeaderMenu />
 
-				<Content style={{ padding: "24px" }}>
+				<Content style={{ padding: "1.5rem"}}>
 					<Routes>
 						<Route path="/tasks" element={<TasksPage />} />
 						<Route path="/boards" element={<BoardsPage />} />
-						<Route path="/boards/:id" element={<BoardPage />} />
+						<Route path="/boards/:id" element={<BoardPageId />} />
 						<Route path="*" element={<div>404 Not Found</div>} />
 					</Routes>
 				</Content>

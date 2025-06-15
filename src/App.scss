@@ -16,6 +16,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	background: #fff;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	margin-bottom: 1rem;
@@ -30,5 +31,18 @@
 	}
 	&:active {
 		background-color: #e0e0e0;
+	}
+}
+
+.boardPageId {
+  text-align: start;
+	&__columns {
+		display: flex;
+		gap: 1rem;
+	}
+	&__column {
+		flex: 1;
+		background: #f5f5f5;
+		border-radius: 8px;
 	}
 }
