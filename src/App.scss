@@ -23,6 +23,9 @@
 }
 
 .taskItem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 	@extend .boardItem;
 	cursor: pointer;
 	padding: 1rem;

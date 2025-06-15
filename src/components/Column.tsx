@@ -18,7 +18,7 @@ const Column: React.FC<ColumnProps> = (props: ColumnProps) => {
 			) : (
 				tasks.map((task) => (
 					<div className="taskItem" key={task.id}>
-						{task.title}
+						<h4>{task.title}</h4> <p>{task.description}</p>
 					</div>
 				))
 			)}
