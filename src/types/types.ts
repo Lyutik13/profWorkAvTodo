@@ -1,5 +1,5 @@
+export type InProgress = "Backlog" | "InProgress" | "Done";
 type Priority = "Low" | "Medium" | "High";
-type InProgress = "Backlog" | "InProgress" | "Done";
 
 interface IUser {
 	id: number;
@@ -27,4 +27,8 @@ export interface IBoards {
 	name: string;
 	description: string;
 	taskCount: number;
+}
+
+export interface IFilterObject {
+	sortTaskNameAndAssignee: string;
 }

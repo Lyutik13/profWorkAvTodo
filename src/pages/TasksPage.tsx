@@ -1,22 +1,25 @@
-import React from "react";
-import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 
+import AppContext from "../AppContext";
 import { api } from "../api/client";
-import type { IAllTasks } from "../types/types";
+import Search from "../components/Search";
+import type { IAllTasks, IBoards } from "../types/types";
 
 const TasksPage: React.FC = () => {
-	const [tasks, setTasks] = useState<IAllTasks[]>([]);
+	const { tasks, setTasks, boards, setBoards } = useContext(AppContext);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-	// const navigate = useNavigate();
-
 	useEffect(() => {
 		const fetchTasks = async () => {
+			if (tasks && tasks.length > 0) {
+				setLoading(false);
+				return;
+			}
+
 			try {
-				const { data: response } = await api.get<{ data: IAllTasks[] }>("/tasks");
-				setTasks(response.data);
+				const { data: resTasks } = await api.get<{ data: IAllTasks[] }>("/tasks");
+				setTasks(resTasks.data);
 			} catch (error) {
 				setError("Failed to get Tasks");
 				console.log(error);
@@ -27,6 +30,24 @@ const TasksPage: React.FC = () => {
 		fetchTasks();
 	}, []);
 
+	useEffect(() => {
+		setLoading(false);
+		const fetchBoards = async () => {
+			if (boards && boards.length > 0) {
+				return;
+			}
+
+			try {
+				const { data: resBoards } = await api.get<{ data: IBoards[] }>("/boards");
+				setBoards(resBoards.data);
+			} catch (error) {
+				setError("Failed to get Boards");
+				console.log(error);
+			}
+		};
+		fetchBoards();
+	}, []);
+
 	if (loading) {
 		return <div>Loading tasks ...</div>;
 	}
@@ -35,13 +56,11 @@ const TasksPage: React.FC = () => {
 		return <div>Error: {error}</div>;
 	}
 
-  console.log(tasks);
-  
-
 	return (
 		<div>
-      {tasks.length === 0 &&  <div>Нет доступных задач</div>}
-			{tasks.map((task) => (
+			<Search />
+			{tasks?.length === 0 && <div>Нет доступных задач</div>}
+			{tasks?.map((task) => (
 				<div className="taskItem" key={task.id}>
 					{task.title}
 				</div>
