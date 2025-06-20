@@ -1,7 +1,7 @@
 export type InProgress = "Backlog" | "InProgress" | "Done";
 type Priority = "Low" | "Medium" | "High";
 
-interface IUser {
+export interface IUser {
 	id: number;
 	fullName: string;
 	email: string;

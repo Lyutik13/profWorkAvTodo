@@ -4,7 +4,15 @@ import { Link } from "react-router-dom";
 import AppContext from "../AppContext";
 
 const BoardsPage: React.FC = () => {
-	const { boards } = useContext(AppContext);
+	const { boards, isLoadingBoards, isErrorBoards } = useContext(AppContext);
+
+	if (isLoadingBoards) {
+		return <div>Loading tasks ...</div>;
+	}
+
+	if (isErrorBoards) {
+		return <div>Error: {isErrorBoards}</div>;
+	}
 
 	return (
 		<div>

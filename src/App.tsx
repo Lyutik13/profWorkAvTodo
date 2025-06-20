@@ -1,10 +1,10 @@
 import "./App.scss";
 import "@ant-design/v5-patch-for-react-19";
 
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
 
+import useFetch from "./hooks/useFetch";
 import AppContext from "./AppContext";
 import HeaderMenu from "./components/Header";
 import TasksPage from "./pages/TasksPage";
@@ -16,13 +16,10 @@ import type { IBoards, IAllTasks } from "./types/types";
 const { Content } = Layout;
 
 export default function App() {
-	const [boards, setBoards] = useState<IBoards[] | null>(null);
-	const [tasks, setTasks] = useState<IAllTasks[] | null>(null);
+  const { data: boards, isLoading: isLoadingBoards, isError: isErrorBoards } = useFetch<IBoards[]>({ url: "/boards", axiosMethod: "get" });
+  const { data: tasks, isLoading: isLoadingTasks, isError: isErrorTasks } = useFetch<IAllTasks[]>({ url: "/tasks", axiosMethod: "get" });
 
-	const value = { boards, setBoards, tasks, setTasks };
-
-  console.log(tasks);
-  
+	const value = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks };
 
 	return (
 		<AppContext.Provider value={value}>
