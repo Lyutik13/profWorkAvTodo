@@ -1,7 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
 
-import { api } from "../api/client";
+import useFetch from "../hooks/useFetch";
 import type { ITaskInBoard } from "../types/types";
 import Column from "../components/Column";
 
@@ -10,39 +9,28 @@ const BoardPageId: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const { name } = location.state || { name: "" }; //Проблема если я вручную вставлю URL в Link не будет state (BoardPageId)
 
-	const [boardPageId, setBoardPageId] = useState<ITaskInBoard[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+	const {
+		data: boardPageId,
+		isLoading: isLoadingPageId,
+		isError: isErrorPageId,
+	} = useFetch<ITaskInBoard[]>({ url: `/boards/${id}`, axiosMethod: "get" });
 
-	const todoTasks = boardPageId.filter((task) => task.status === "Backlog");
-	const inProgressTasks = boardPageId.filter((task) => task.status === "InProgress");
-	const doneTasks = boardPageId.filter((task) => task.status === "Done");
+	const todoTasks = boardPageId?.filter((task) => task.status === "Backlog");
+	const inProgressTasks = boardPageId?.filter((task) => task.status === "InProgress");
+	const doneTasks = boardPageId?.filter((task) => task.status === "Done");
 
-	useEffect(() => {
-		const fetchBoardById = async () => {
-			try {
-				const { data: response } = await api.get<{ data: ITaskInBoard[] }>(`/boards/${id}`);
-				setBoardPageId(response.data);
-			} catch (error) {
-				setError("Failed to get Board by ID");
-				console.log(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchBoardById();
-	}, []);
-
-	if (loading) {
+	if (isLoadingPageId) {
 		return <div>Loading boards ...</div>;
 	}
 
-	if (error) {
-		return <div>Error: {error}</div>;
+	if (!boardPageId) {
+		return <div>Нет доступных задач</div>;
 	}
 
-	console.log(boardPageId);
-	console.log(location.state);
+	if (isErrorPageId) {
+		return <div>Error: {isErrorPageId}</div>;
+	}
+	console.log("boardPageId");
 
 	return (
 		<div className="boardPageId">
