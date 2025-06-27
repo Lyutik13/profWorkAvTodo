@@ -6,8 +6,8 @@ const { Header } = Layout;
 
 const HeaderMenu: React.FC = () => {
 	return (
-		<Header>
-			<nav className="header">
+		<Header className="header">
+			<nav className="nav">
 				<Menu
 					style={{ flex: 1 }}
 					theme="dark"
@@ -23,7 +23,7 @@ const HeaderMenu: React.FC = () => {
 						},
 					]}
 				/>
-				<Button type="primary" style={{ marginLeft: "auto" }}>
+				<Button type="primary" style={{ marginRight: "0.5rem" }}>
 					Создать задачу
 				</Button>
 			</nav>

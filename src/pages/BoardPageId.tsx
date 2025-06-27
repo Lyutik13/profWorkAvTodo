@@ -1,13 +1,14 @@
-import { useParams, useLocation } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 
+import AppContext from "../AppContext";
 import useFetch from "../hooks/useFetch";
 import type { ITaskInBoard } from "../types/types";
 import Column from "../components/Column";
 
 const BoardPageId: React.FC = () => {
-	const location = useLocation();
 	const { id } = useParams<{ id: string }>();
-	const { name } = location.state || { name: "" }; //Проблема если я вручную вставлю URL в Link не будет state (BoardPageId)
+	const { boards } = React.useContext(AppContext);
 
 	const {
 		data: boardPageId,
@@ -15,12 +16,13 @@ const BoardPageId: React.FC = () => {
 		isError: isErrorPageId,
 	} = useFetch<ITaskInBoard[]>({ url: `/boards/${id}`, axiosMethod: "get" });
 
+	const boardName = boards?.find((board) => Number(board.id) === Number(id))?.name || "";
 	const todoTasks = boardPageId?.filter((task) => task.status === "Backlog");
 	const inProgressTasks = boardPageId?.filter((task) => task.status === "InProgress");
 	const doneTasks = boardPageId?.filter((task) => task.status === "Done");
 
 	if (isLoadingPageId) {
-		return <div>Loading boards ...</div>;
+		return <div>Loading board...</div>;
 	}
 
 	if (!boardPageId) {
@@ -30,11 +32,10 @@ const BoardPageId: React.FC = () => {
 	if (isErrorPageId) {
 		return <div>Error: {isErrorPageId}</div>;
 	}
-	console.log("boardPageId");
 
 	return (
 		<div className="boardPageId">
-			<h2 className="boardPageId__title">{name}</h2>
+			<h2 className="boardPageId__title">{boardName ? boardName : "Нет такой доски"}</h2>
 			<div className="boardPageId__columns">
 				<Column title="To do" tasks={todoTasks} />
 				<Column title="In progress" tasks={inProgressTasks} />

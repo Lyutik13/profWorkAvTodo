@@ -1,20 +1,25 @@
 #root {
 	max-width: 1920px;
 	margin: 0 auto;
-	padding: 2rem;
-	text-align: center;
+	padding: 0.5rem;
 }
 
-.header {
+.nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
+.header {
+	padding: unset;
+}
+
 .boardItem {
-	padding: 1.5rem;
+	padding: 1.5rem 0.5rem;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
+	gap: 1rem;
 	align-items: center;
 	background: #fff;
 	border: 1px solid #ccc;
@@ -23,12 +28,12 @@
 }
 
 .taskItem {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
 	@extend .boardItem;
 	cursor: pointer;
-	padding: 1rem;
+	padding: 1rem 0.5rem;
 	&:hover {
 		background-color: #f0f0f0;
 	}
@@ -38,7 +43,7 @@
 }
 
 .boardPageId {
-  text-align: start;
+	text-align: start;
 	&__columns {
 		display: flex;
 		gap: 1rem;
@@ -51,8 +56,38 @@
 }
 
 .search {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+
+	&__input {
+		flex: 1;
+		min-width: 280px;
+	}
+
+	&__filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@media (min-width: 576px) {
+	.boardItem {
+		flex-direction: row;
+	}
+}
+
+@media (min-width: 768px) {
+	.boardItem {
+		padding: 1.5rem 1rem;
+	}
+
+	.taskItem {
+		padding: 1rem;
+	}
 }
