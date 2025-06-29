@@ -7,7 +7,8 @@ import AppContext from "../AppContext";
 const { Option } = Select;
 
 const Search: React.FC = () => {
-	const { filters, setFilters } = React.useContext(AppContext);
+	const { filters, setFilters, boards, users } = React.useContext(AppContext);
+	const statusArr = ["Backlog", "InProgress", "Done"];
 
 	return (
 		<div className="search">
@@ -23,28 +24,45 @@ const Search: React.FC = () => {
 			</div>
 
 			<div className="search__filters">
-				<Select placeholder="Статус" style={{ width: 140 }} allowClear>
-					<Option value="open">Открыта</Option>
-					<Option value="in_progress">В работе</Option>
-					<Option value="done">Завершена</Option>
-				</Select>
-
-				<Select placeholder="Доска" style={{ width: 140 }} allowClear>
-					<Option value="board1">Доска 1</Option>
-					<Option value="board2">Доска 2</Option>
+				<Select
+					value={filters.sortStatus}
+					placeholder="Статус"
+					style={{ width: 140 }}
+					allowClear
+					onChange={(value) => setFilters({ ...filters, sortStatus: value })}>
+					{statusArr.map((status) => (
+						<Option value={`${status}`}>{status}</Option>
+					))}
 				</Select>
 
 				<Select
+					value={filters.sortBoardId}
+					placeholder="Доска"
+					style={{ width: 140 }}
+					allowClear
+					onChange={(value) => setFilters({ ...filters, sortBoardId: value })}>
+					{boards?.map((board) => <Option value={`${board.id}`}>{board.name}</Option>)}
+				</Select>
+
+				<Select
+					value={filters.sortAssigneeId}
 					placeholder="Исполнитель"
 					style={{ width: 140 }}
 					allowClear
-					showSearch
-					optionFilterProp="children">
-					<Option value="user1">Иван Иванов</Option>
-					<Option value="user2">Петр Петров</Option>
+					onChange={(value) => setFilters({ ...filters, sortAssigneeId: value })}>
+					{users?.map((user) => <Option value={`${user.id}`}>{user.fullName}</Option>)}
 				</Select>
 
-				<Button icon={<DeleteOutlined />}></Button>
+				<Button
+					onClick={() =>
+						setFilters({
+							sortTaskNameAndAssignee: "",
+							sortStatus: undefined,
+							sortBoardId: undefined,
+							sortAssigneeId: undefined,
+						})
+					}
+					icon={<DeleteOutlined />}></Button>
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { IBoards, IAllTasks, IFilterObject } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
 
 // setBoards: (boards: IBoards[]) => void;
 
@@ -11,6 +11,8 @@ interface IAppContext {
 	tasks: IAllTasks[] | undefined;
 	isLoadingTasks?: boolean;
 	isErrorTasks?: string;
+  users: IUserFullDesc[] | undefined
+  
   filters: IFilterObject;
 	setFilters: (filters: IFilterObject) => void;
 }
@@ -22,8 +24,13 @@ const appContextValue: IAppContext = {
 	tasks: undefined,
 	isLoadingTasks: false,
 	isErrorTasks: undefined,
+  users: undefined,
+
 	filters: {
 		sortTaskNameAndAssignee: '',
+    sortStatus: undefined,
+    sortBoardId: undefined,
+    sortAssigneeId: undefined,
 	},
 	setFilters: () => {},
 };

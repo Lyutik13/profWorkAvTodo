@@ -13,25 +13,24 @@ import TasksPage from "./pages/TasksPage";
 import BoardsPage from "./pages/BoardsPage";
 import BoardPageId from "./pages/BoardPageId";
 
-import type { IBoards, IAllTasks, IFilterObject } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
 
 const { Content } = Layout;
 
 export default function App() {
   const { data: boards, isLoading: isLoadingBoards, isError: isErrorBoards } = useFetch<IBoards[]>({ url: "/boards", axiosMethod: "get" });
   const { data: tasks, isLoading: isLoadingTasks, isError: isErrorTasks } = useFetch<IAllTasks[]>({ url: "/tasks", axiosMethod: "get" });
+  const { data: users } = useFetch<IUserFullDesc[]>({ url: "/users", axiosMethod: "get" });
   
   const [ filters, setFilters ] = React.useState<IFilterObject>({
     sortTaskNameAndAssignee: '',
+    sortStatus: undefined,
+    sortBoardId: undefined,
+    sortAssigneeId: undefined,
   });
 
-	const value = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, filters, setFilters };
-
-  console.log(filters);
-  console.log("Boards:", boards);
+	const value = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters };
   
-  
-
 	return (
 		<AppContext.Provider value={value}>
 			<BrowserRouter>

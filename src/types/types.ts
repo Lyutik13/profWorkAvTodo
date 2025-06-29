@@ -1,11 +1,18 @@
 export type InProgress = "Backlog" | "InProgress" | "Done";
-type Priority = "Low" | "Medium" | "High";
+export type Priority = "Low" | "Medium" | "High";
 
 export interface IUser {
 	id: number;
 	fullName: string;
 	email: string;
 	avatarUrl: string;
+}
+
+export interface IUserFullDesc extends IUser {
+	description: string;
+	tasksCount: number;
+	teamId: number;
+	teamName: string;
 }
 
 export interface ITaskInBoard {
@@ -31,4 +38,7 @@ export interface IBoards {
 
 export interface IFilterObject {
 	sortTaskNameAndAssignee: string;
+  sortStatus?: InProgress | undefined;
+  sortBoardId?: number | undefined;
+  sortAssigneeId?: number | undefined;
 }
