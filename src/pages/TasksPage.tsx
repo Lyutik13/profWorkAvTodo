@@ -36,7 +36,6 @@ const TasksPage: React.FC = () => {
 	return (
 		<div>
 			<Search />
-			{tasks?.length === 0 && <div>Нет доступных задач.</div>}
 			{filtersTasks?.length === 0 && <div>Нет доступных задач. Измените ввод или фильтры.</div>}
 			{filtersTasks?.map((task) => (
 				<div className="taskItem" key={task.id}>

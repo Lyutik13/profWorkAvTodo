@@ -4,6 +4,20 @@
 	padding: 0.5rem;
 }
 
+$red-muted: #faafa8;
+$yellow-warm: #fff8b8;
+$green-light: #e2f6d3;
+
+.red {
+	background: $red-muted !important;
+}
+.yellow {
+	background: $yellow-warm !important;
+}
+.green {
+	background: $green-light !important;
+}
+
 .nav {
 	display: flex;
 	justify-content: center;
@@ -14,26 +28,27 @@
 	padding: unset;
 }
 
-.boardItem {
-	padding: 1.5rem 0.5rem;
+.itemStyle {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 1rem;
-	align-items: center;
 	background: #fff;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	margin-bottom: 1rem;
 }
 
+.boardItem {
+	@extend .itemStyle;
+	padding: 1.5rem 0.5rem;
+}
+
 .taskItem {
-	display: flex;
-	flex-direction: column;
-	align-items: start;
-	@extend .boardItem;
-	cursor: pointer;
+	@extend .itemStyle;
 	padding: 1rem 0.5rem;
+	cursor: pointer;
+
 	&:hover {
 		background-color: #f0f0f0;
 	}
@@ -42,10 +57,20 @@
 	}
 }
 
+.cardItem {
+	@extend .taskItem;
+	&:hover {
+		box-shadow:
+			0 1px 2px 0 rgba(60, 64, 67, 0.3),
+			0 1px 3px 1px rgba(60, 64, 67, 0.15) !important;
+	}
+}
+
 .boardPageId {
 	text-align: start;
 	&__columns {
 		display: flex;
+		flex-direction: column;
 		gap: 1rem;
 	}
 	&__column {
@@ -79,6 +104,12 @@
 @media (min-width: 576px) {
 	.boardItem {
 		flex-direction: row;
+	}
+
+	.boardPageId {
+		&__columns {
+			flex-direction: row;
+		}
 	}
 }
 

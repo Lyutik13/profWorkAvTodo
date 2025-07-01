@@ -37,9 +37,9 @@ const BoardPageId: React.FC = () => {
 		<div className="boardPageId">
 			<h2 className="boardPageId__title">{boardName ? boardName : "Нет такой доски"}</h2>
 			<div className="boardPageId__columns">
-				<Column title="To do" tasks={todoTasks} />
-				<Column title="In progress" tasks={inProgressTasks} />
-				<Column title="Done" tasks={doneTasks} />
+				<Column title="To do" colorCard="red" tasks={todoTasks} />
+				<Column title="In progress" colorCard="yellow" tasks={inProgressTasks} />
+				<Column title="Done" colorCard="green" tasks={doneTasks} />
 			</div>
 		</div>
 	);
