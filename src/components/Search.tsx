@@ -57,9 +57,9 @@ const Search: React.FC = () => {
 					onClick={() =>
 						setFilters({
 							sortTaskNameAndAssignee: "",
-							sortStatus: undefined,
-							sortBoardId: undefined,
-							sortAssigneeId: undefined,
+							sortStatus: null,
+							sortBoardId: null,
+							sortAssigneeId: null,
 						})
 					}
 					icon={<DeleteOutlined />}></Button>

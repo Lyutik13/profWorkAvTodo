@@ -4,7 +4,8 @@ import AppContext from "../AppContext";
 import Search from "../components/Search";
 
 const TasksPage: React.FC = () => {
-	const { tasks, isLoadingTasks, isErrorTasks, filters } = React.useContext(AppContext);
+	const { tasks, isLoadingTasks, isErrorTasks, filters, setSelectedTaskForModal,  setIsModalOpen } =
+		React.useContext(AppContext);
 
 	const filtersTasks =
 		tasks &&
@@ -19,8 +20,10 @@ const TasksPage: React.FC = () => {
 				.toLowerCase()
 				.includes(filters.sortStatus?.toLowerCase() || "");
 
-			const inBoardId = Number(task.boardId) === Number(filters.sortBoardId) || !filters.sortBoardId;
-      const inAssigneeId = Number(task.assignee.id) === Number(filters.sortAssigneeId) || !filters.sortAssigneeId;
+			const inBoardId =
+				Number(task.boardId) === Number(filters.sortBoardId) || !filters.sortBoardId;
+			const inAssigneeId =
+				Number(task.assignee.id) === Number(filters.sortAssigneeId) || !filters.sortAssigneeId;
 
 			return taskNameAndAssignee && inProgressStatus && inBoardId && inAssigneeId;
 		});
@@ -38,7 +41,13 @@ const TasksPage: React.FC = () => {
 			<Search />
 			{filtersTasks?.length === 0 && <div>Нет доступных задач. Измените ввод или фильтры.</div>}
 			{filtersTasks?.map((task) => (
-				<div className="taskItem" key={task.id}>
+				<div
+					className="taskItem"
+					key={task.id}
+					onClick={() => {
+						setSelectedTaskForModal?.(task);
+            setIsModalOpen?.(true);
+					}}>
 					{task.title}
 				</div>
 			))}

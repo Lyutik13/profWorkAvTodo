@@ -10,7 +10,7 @@ interface IUseFetchProps {
 const useFetch = <T,>(props: IUseFetchProps) => {
 	const { url, axiosMethod } = props;
 
-	const [data, setData] = React.useState<T>();
+	const [data, setData] = React.useState<T | null>(null);
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [isError, setIsError] = React.useState<string>();
 

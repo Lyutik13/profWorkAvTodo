@@ -16,7 +16,7 @@ const BoardPageId: React.FC = () => {
 		isError: isErrorPageId,
 	} = useFetch<ITaskInBoard[]>({ url: `/boards/${id}`, axiosMethod: "get" });
 
-	const boardName = boards?.find((board) => Number(board.id) === Number(id))?.name || "";
+	const boardName = boards?.find((board) => Number(board.id) === Number(id))?.name || null;
 	const todoTasks = boardPageId?.filter((task) => task.status === "Backlog");
 	const inProgressTasks = boardPageId?.filter((task) => task.status === "InProgress");
 	const doneTasks = boardPageId?.filter((task) => task.status === "Done");

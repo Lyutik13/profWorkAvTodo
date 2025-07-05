@@ -1,6 +1,7 @@
 import React from "react";
 
 import type { ITaskInBoard } from "../types/types";
+import AppContext from "../AppContext";
 
 type ColumnProps = {
 	title: string;
@@ -10,6 +11,7 @@ type ColumnProps = {
 
 const Column: React.FC<ColumnProps> = (props: ColumnProps) => {
 	const { title, colorCard = "", tasks } = props;
+	const { setSelectedTaskForModal, setIsModalOpen } = React.useContext(AppContext);
 
 	return (
 		<div className="boardPageId__column">
@@ -18,7 +20,13 @@ const Column: React.FC<ColumnProps> = (props: ColumnProps) => {
 				<div>Нет задач в этом статусе</div>
 			) : (
 				tasks?.map((task) => (
-					<div className={`cardItem ${colorCard}`} key={task.id}>
+					<div
+						className={`cardItem ${colorCard}`}
+						key={task.id}
+						onClick={() => {
+							setSelectedTaskForModal?.(task);
+							setIsModalOpen?.(true);
+						}}>
 						<h4>{task.title}</h4> <p>{task.description}</p>
 					</div>
 				))

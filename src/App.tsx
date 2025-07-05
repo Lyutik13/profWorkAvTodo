@@ -12,8 +12,9 @@ import HeaderMenu from "./components/Header";
 import TasksPage from "./pages/TasksPage";
 import BoardsPage from "./pages/BoardsPage";
 import BoardPageId from "./pages/BoardPageId";
+import ModalForm from "./components/ModalForm";
 
-import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc, ITaskInBoard } from "./types/types";
 
 const { Content } = Layout;
 
@@ -21,23 +22,32 @@ export default function App() {
   const { data: boards, isLoading: isLoadingBoards, isError: isErrorBoards } = useFetch<IBoards[]>({ url: "/boards", axiosMethod: "get" });
   const { data: tasks, isLoading: isLoadingTasks, isError: isErrorTasks } = useFetch<IAllTasks[]>({ url: "/tasks", axiosMethod: "get" });
   const { data: users } = useFetch<IUserFullDesc[]>({ url: "/users", axiosMethod: "get" });
+  // Promise.allSettled([boards, tasks, users]) вынести в кастомный хук
   
   const [ filters, setFilters ] = React.useState<IFilterObject>({
     sortTaskNameAndAssignee: '',
-    sortStatus: undefined,
-    sortBoardId: undefined,
-    sortAssigneeId: undefined,
+    sortStatus: null,
+    sortBoardId: null,
+    sortAssigneeId: null,
   });
-
-	const value = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters };
   
+  const [ selectedTaskForModal, setSelectedTaskForModal ] = React.useState<IAllTasks | ITaskInBoard | null>(null);
+  const [ isModalOpen, setIsModalOpen ] = React.useState<boolean>(false);
+  
+	const valueContext = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters, selectedTaskForModal, setSelectedTaskForModal, isModalOpen, setIsModalOpen };
+
+  console.log(selectedTaskForModal);
+  console.log(isModalOpen);
+  
+  // вынеси всё в AppProvider, чтобы не было лишнего контекста
 	return (
-		<AppContext.Provider value={value}>
+		<AppContext.Provider value={valueContext}>
 			<BrowserRouter>
 				<Layout>
 					<HeaderMenu />
 
 					<Content style={{ padding: "1rem" }}>
+            {isModalOpen && <ModalForm/>}
 						<Routes>
 							<Route path="/tasks" element={<TasksPage />} />
 							<Route path="/boards" element={<BoardsPage />} />
@@ -50,3 +60,4 @@ export default function App() {
 		</AppContext.Provider>
 	);
 }
+

@@ -38,7 +38,7 @@ export interface IBoards {
 
 export interface IFilterObject {
 	sortTaskNameAndAssignee: string;
-  sortStatus?: InProgress | undefined;
-  sortBoardId?: number | undefined;
-  sortAssigneeId?: number | undefined;
+  sortStatus?: InProgress | null;
+  sortBoardId?: number | null;
+  sortAssigneeId?: number | null;
 }

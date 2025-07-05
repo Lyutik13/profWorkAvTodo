@@ -1,38 +1,46 @@
 import React from "react";
 
-import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc, ITaskInBoard } from "./types/types";
 
 // setBoards: (boards: IBoards[]) => void;
 
 interface IAppContext {
-	boards: IBoards[] | undefined;
+	boards: IBoards[] | null;
 	isLoadingBoards?: boolean;
-	isErrorBoards?: string;
-	tasks: IAllTasks[] | undefined;
+	isErrorBoards?: string | null;
+	tasks: IAllTasks[] | null;
 	isLoadingTasks?: boolean;
-	isErrorTasks?: string;
-  users: IUserFullDesc[] | undefined
+	isErrorTasks?: string | null;
+  users: IUserFullDesc[] | null
   
   filters: IFilterObject;
 	setFilters: (filters: IFilterObject) => void;
+  selectedTaskForModal?: IAllTasks | ITaskInBoard | null;
+  setSelectedTaskForModal?: (task: IAllTasks | ITaskInBoard | null) => void;
+  isModalOpen?: boolean;
+  setIsModalOpen?: (isOpen: boolean) => void;
 }
 
 const appContextValue: IAppContext = {
-	boards: undefined,
+	boards: null,
 	isLoadingBoards: false,
-	isErrorBoards: undefined,
-	tasks: undefined,
+	isErrorBoards: null,
+	tasks: null,
 	isLoadingTasks: false,
-	isErrorTasks: undefined,
-  users: undefined,
+	isErrorTasks: null,
+  users: null,
 
 	filters: {
 		sortTaskNameAndAssignee: '',
-    sortStatus: undefined,
-    sortBoardId: undefined,
-    sortAssigneeId: undefined,
+    sortStatus: null,
+    sortBoardId: null,
+    sortAssigneeId: null,
 	},
 	setFilters: () => {},
+  selectedTaskForModal: null,
+  setSelectedTaskForModal: () => {},
+  isModalOpen: false,
+  setIsModalOpen: () => {},
 };
 
 const AppContext = React.createContext<IAppContext>(appContextValue);
