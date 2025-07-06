@@ -1,6 +1,9 @@
 export type InProgress = "Backlog" | "InProgress" | "Done";
 export type Priority = "Low" | "Medium" | "High";
 
+export const statusArr = ["Backlog", "InProgress", "Done"];
+export const priorityArr = ["Low", "Medium", "High"];
+
 export interface IUser {
 	id: number;
 	fullName: string;

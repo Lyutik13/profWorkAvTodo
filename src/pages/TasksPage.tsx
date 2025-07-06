@@ -4,7 +4,7 @@ import AppContext from "../AppContext";
 import Search from "../components/Search";
 
 const TasksPage: React.FC = () => {
-	const { tasks, isLoadingTasks, isErrorTasks, filters, setSelectedTaskForModal,  setIsModalOpen } =
+	const { tasks, isLoadingTasks, isErrorTasks, filters, handleOpenModal } =
 		React.useContext(AppContext);
 
 	const filtersTasks =
@@ -37,21 +37,15 @@ const TasksPage: React.FC = () => {
 	}
 
 	return (
-		<div>
+		<>
 			<Search />
 			{filtersTasks?.length === 0 && <div>Нет доступных задач. Измените ввод или фильтры.</div>}
 			{filtersTasks?.map((task) => (
-				<div
-					className="taskItem"
-					key={task.id}
-					onClick={() => {
-						setSelectedTaskForModal?.(task);
-            setIsModalOpen?.(true);
-					}}>
+				<div className="taskItem" key={task.id} onClick={() => handleOpenModal(task)}>
 					{task.title}
 				</div>
 			))}
-		</div>
+		</>
 	);
 };
 

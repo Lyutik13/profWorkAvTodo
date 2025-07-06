@@ -11,7 +11,7 @@ type ColumnProps = {
 
 const Column: React.FC<ColumnProps> = (props: ColumnProps) => {
 	const { title, colorCard = "", tasks } = props;
-	const { setSelectedTaskForModal, setIsModalOpen } = React.useContext(AppContext);
+	const { handleOpenModal } = React.useContext(AppContext);
 
 	return (
 		<div className="boardPageId__column">
@@ -23,10 +23,7 @@ const Column: React.FC<ColumnProps> = (props: ColumnProps) => {
 					<div
 						className={`cardItem ${colorCard}`}
 						key={task.id}
-						onClick={() => {
-							setSelectedTaskForModal?.(task);
-							setIsModalOpen?.(true);
-						}}>
+						onClick={() => handleOpenModal(task)}>
 						<h4>{task.title}</h4> <p>{task.description}</p>
 					</div>
 				))

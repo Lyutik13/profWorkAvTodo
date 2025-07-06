@@ -3,12 +3,12 @@ import { Input, Select, Button } from "antd";
 import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import AppContext from "../AppContext";
+import { statusArr } from "../types/types";
 
 const { Option } = Select;
 
 const Search: React.FC = () => {
 	const { filters, setFilters, boards, users } = React.useContext(AppContext);
-	const statusArr = ["Backlog", "InProgress", "Done"];
 
 	return (
 		<div className="search">

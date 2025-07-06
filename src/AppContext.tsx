@@ -12,13 +12,15 @@ interface IAppContext {
 	isLoadingTasks?: boolean;
 	isErrorTasks?: string | null;
   users: IUserFullDesc[] | null
-  
+
   filters: IFilterObject;
 	setFilters: (filters: IFilterObject) => void;
+
   selectedTaskForModal?: IAllTasks | ITaskInBoard | null;
   setSelectedTaskForModal?: (task: IAllTasks | ITaskInBoard | null) => void;
   isModalOpen?: boolean;
   setIsModalOpen?: (isOpen: boolean) => void;
+  handleOpenModal: (task?: IAllTasks | ITaskInBoard) => void
 }
 
 const appContextValue: IAppContext = {
@@ -37,10 +39,12 @@ const appContextValue: IAppContext = {
     sortAssigneeId: null,
 	},
 	setFilters: () => {},
+  
   selectedTaskForModal: null,
   setSelectedTaskForModal: () => {},
   isModalOpen: false,
   setIsModalOpen: () => {},
+  handleOpenModal: () => {}
 };
 
 const AppContext = React.createContext<IAppContext>(appContextValue);

@@ -2,37 +2,39 @@ import React from "react";
 import { Modal } from "antd";
 
 import AppContext from "../AppContext";
+import FormTask from "./FormTask";
 
+const ModalForm: React.FC = () => {
+	const { isModalOpen, setIsModalOpen } = React.useContext(AppContext);
 
-const App: React.FC = () => {
-	const { selectedTaskForModal, setSelectedTaskForModal, isModalOpen, setIsModalOpen } =
-		React.useContext(AppContext);
+	// Обработчики для кнопок "ОК" и "Отмена модального окна"
+	// const handleOk = () => {
+	// 	setIsModalOpen?.(false);
+	//   console.log("ModalForm: handleOk called");
 
-	const handleOk = () => {
-		setIsModalOpen?.(false);
-    setSelectedTaskForModal?.(null)
-	};
+	// 	// setSelectedTaskForModal?.(null);
+	// };
 
 	const handleCancel = () => {
-	setIsModalOpen?.(false);
-	setSelectedTaskForModal?.(null);
-	};
+		setIsModalOpen?.(false);
+		console.log("ModalForm: handleCancel called");
 
-  console.log('modal');
-  
+		// setSelectedTaskForModal?.(null);
+	};
 
 	return (
 		<>
 			<Modal
-				title={selectedTaskForModal?.title}
+				title={"Создание/Редактирование задачи"}
 				closable={{ "aria-label": "Custom Close Button" }}
 				open={isModalOpen}
-				onOk={handleOk}
-				onCancel={handleCancel}>
-				<p>Some contents...</p>
+				// onOk={handleOk}
+				onCancel={handleCancel}
+				footer={[]}>
+				<FormTask />
 			</Modal>
 		</>
 	);
 };
 
-export default App;
+export default ModalForm;

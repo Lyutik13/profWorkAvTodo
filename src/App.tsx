@@ -33,8 +33,16 @@ export default function App() {
   
   const [ selectedTaskForModal, setSelectedTaskForModal ] = React.useState<IAllTasks | ITaskInBoard | null>(null);
   const [ isModalOpen, setIsModalOpen ] = React.useState<boolean>(false);
+
+  const handleOpenModal = (task?: IAllTasks | ITaskInBoard) => {
+		setIsModalOpen?.(true);
+    if (task) {
+      setSelectedTaskForModal?.(task);
+    }
+	};
   
-	const valueContext = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters, selectedTaskForModal, setSelectedTaskForModal, isModalOpen, setIsModalOpen };
+	const valueContext = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters, selectedTaskForModal, setSelectedTaskForModal, isModalOpen, setIsModalOpen, handleOpenModal };
+
 
   console.log(selectedTaskForModal);
   console.log(isModalOpen);
@@ -46,7 +54,7 @@ export default function App() {
 				<Layout>
 					<HeaderMenu />
 
-					<Content style={{ padding: "1rem" }}>
+					<Content style={{ padding: "1rem", marginTop: 64 }}>
             {isModalOpen && <ModalForm/>}
 						<Routes>
 							<Route path="/tasks" element={<TasksPage />} />
@@ -60,4 +68,3 @@ export default function App() {
 		</AppContext.Provider>
 	);
 }
-
