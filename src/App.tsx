@@ -14,7 +14,7 @@ import BoardsPage from "./pages/BoardsPage";
 import BoardPageId from "./pages/BoardPageId";
 import ModalForm from "./components/ModalForm";
 
-import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc, ITaskInBoard } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
 
 const { Content } = Layout;
 
@@ -31,10 +31,11 @@ export default function App() {
     sortAssigneeId: null,
   });
   
-  const [ selectedTaskForModal, setSelectedTaskForModal ] = React.useState<IAllTasks | ITaskInBoard | null>(null);
+  const [ selectedTaskForModal, setSelectedTaskForModal ] = React.useState<IAllTasks| null>(null);
   const [ isModalOpen, setIsModalOpen ] = React.useState<boolean>(false);
 
-  const handleOpenModal = (task?: IAllTasks | ITaskInBoard) => {
+  const handleOpenModal = (task?: IAllTasks) => {
+    setSelectedTaskForModal?.(null);
 		setIsModalOpen?.(true);
     if (task) {
       setSelectedTaskForModal?.(task);
@@ -43,10 +44,6 @@ export default function App() {
   
 	const valueContext = { boards, isLoadingBoards, isErrorBoards, tasks, isLoadingTasks, isErrorTasks, users, filters, setFilters, selectedTaskForModal, setSelectedTaskForModal, isModalOpen, setIsModalOpen, handleOpenModal };
 
-
-  console.log(selectedTaskForModal);
-  console.log(isModalOpen);
-  
   // вынеси всё в AppProvider, чтобы не было лишнего контекста
 	return (
 		<AppContext.Provider value={valueContext}>
@@ -65,6 +62,6 @@ export default function App() {
 					</Content>
 				</Layout>
 			</BrowserRouter>
-		</AppContext.Provider>
+		</AppContext.Provider>                
 	);
 }

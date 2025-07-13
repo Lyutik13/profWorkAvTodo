@@ -1,12 +1,12 @@
 import React from "react";
 
-import type { ITaskInBoard } from "../types/types";
+import type { IAllTasks } from "../types/types";
 import AppContext from "../AppContext";
 
 type ColumnProps = {
 	title: string;
 	colorCard?: string;
-	tasks: ITaskInBoard[] | undefined;
+	tasks: IAllTasks[] | undefined;
 };
 
 const Column: React.FC<ColumnProps> = (props: ColumnProps) => {

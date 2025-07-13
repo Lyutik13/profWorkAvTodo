@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import AppContext from "../AppContext";
 import useFetch from "../hooks/useFetch";
-import type { ITaskInBoard } from "../types/types";
+import type { IAllTasks } from "../types/types";
 import Column from "../components/Column";
 
 const BoardPageId: React.FC = () => {
@@ -14,12 +14,20 @@ const BoardPageId: React.FC = () => {
 		data: boardPageId,
 		isLoading: isLoadingPageId,
 		isError: isErrorPageId,
-	} = useFetch<ITaskInBoard[]>({ url: `/boards/${id}`, axiosMethod: "get" });
+	} = useFetch<IAllTasks[]>({ url: `/boards/${id}`, axiosMethod: "get" });
 
-	const boardName = boards?.find((board) => Number(board.id) === Number(id))?.name || null;
-	const todoTasks = boardPageId?.filter((task) => task.status === "Backlog");
-	const inProgressTasks = boardPageId?.filter((task) => task.status === "InProgress");
-	const doneTasks = boardPageId?.filter((task) => task.status === "Done");
+	const boardName = boards?.find((board) => Number(board.id) === Number(id))?.name || "";
+	const boardIdAndBoardNameAddInBoardPageId = boardPageId?.map((item) => {
+		item.boardId = Number(id);
+		item.boardName = boardName;
+		return item;
+	});
+
+	const todoTasks = boardIdAndBoardNameAddInBoardPageId?.filter((task) => task.status === "Backlog");
+	const inProgressTasks = boardIdAndBoardNameAddInBoardPageId?.filter((task) => task.status === "InProgress");
+	const doneTasks = boardIdAndBoardNameAddInBoardPageId?.filter((task) => task.status === "Done");
+
+	// const paramsForSelectedTaskForModal =
 
 	if (isLoadingPageId) {
 		return <div>Loading board...</div>;

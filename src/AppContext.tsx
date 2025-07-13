@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc, ITaskInBoard } from "./types/types";
+import type { IBoards, IAllTasks, IFilterObject, IUserFullDesc } from "./types/types";
 
 // setBoards: (boards: IBoards[]) => void;
 
@@ -16,11 +16,11 @@ interface IAppContext {
   filters: IFilterObject;
 	setFilters: (filters: IFilterObject) => void;
 
-  selectedTaskForModal?: IAllTasks | ITaskInBoard | null;
-  setSelectedTaskForModal?: (task: IAllTasks | ITaskInBoard | null) => void;
+  selectedTaskForModal?: IAllTasks | null;
+  setSelectedTaskForModal?: (task: IAllTasks | null) => void;
   isModalOpen?: boolean;
   setIsModalOpen?: (isOpen: boolean) => void;
-  handleOpenModal: (task?: IAllTasks | ITaskInBoard) => void
+  handleOpenModal: (task?: IAllTasks) => void
 }
 
 const appContextValue: IAppContext = {
