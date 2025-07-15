@@ -27,8 +27,6 @@ const BoardPageId: React.FC = () => {
 	const inProgressTasks = boardIdAndBoardNameAddInBoardPageId?.filter((task) => task.status === "InProgress");
 	const doneTasks = boardIdAndBoardNameAddInBoardPageId?.filter((task) => task.status === "Done");
 
-	// const paramsForSelectedTaskForModal =
-
 	if (isLoadingPageId) {
 		return <div>Loading board...</div>;
 	}

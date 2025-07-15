@@ -10,9 +10,10 @@ import type { IAllTasks } from "../types/types";
 import { statusArr, priorityArr } from "../types/types";
 
 export const FormTask = () => {
-	const { selectedTaskForModal, boards, users } = React.useContext(AppContext);
-  const matchBoard = useMatch("/boards/:id");
-  const matchTasks = useMatch("/tasks");
+	const { selectedTaskForModal, boards, users, tasks, setIsModalOpen, setSelectedTaskForModal } =
+		React.useContext(AppContext);
+	const matchBoard = useMatch("/boards/:id");
+	const matchTasks = useMatch("/tasks");
 
 	const { control, handleSubmit } = useForm<IAllTasks>({
 		defaultValues: {
@@ -28,7 +29,19 @@ export const FormTask = () => {
 	});
 
 	const onSubmit: SubmitHandler<IAllTasks> = (data: IAllTasks) => {
+		const boardIdInData = boards?.find((item) => item.name.includes(data.boardName))?.id;
+		const idData = tasks ? Number(tasks[tasks.length - 1]?.id) + 1 : 1;
+		data.boardId = data.boardId ?? boardIdInData;
+		data.id = data.id ?? idData;
+
+		setSelectedTaskForModal?.(data);
+
+		setTimeout(() => {
+			setIsModalOpen?.(false);
+		}, 2000);
+
 		console.log(data);
+		return data;
 	};
 
 	// Обработчики для формы
@@ -93,7 +106,7 @@ export const FormTask = () => {
 					<Form.Item>
 						<Select
 							{...field}
-							disabled={!!matchBoard && !!selectedTaskForModal?.boardName}
+							disabled={!!matchBoard && !!selectedTaskForModal}
 							value={field.value}
 							onChange={field.onChange}
 							placeholder="Проект"
@@ -128,7 +141,7 @@ export const FormTask = () => {
 					</Form.Item>
 				)}
 			/>
-      
+
 			<Controller
 				name="status"
 				control={control}
@@ -174,7 +187,7 @@ export const FormTask = () => {
 			<div className="formBtn">
 				{matchTasks && (
 					<Link to={`/boards/${selectedTaskForModal?.boardId}`}>
-						<Button>Перейти на доску</Button>
+						<Button disabled={!selectedTaskForModal}>Перейти на доску</Button>
 					</Link>
 				)}
 				<Button type="primary" htmlType="submit">

@@ -35,7 +35,7 @@ export default function App() {
   const [ isModalOpen, setIsModalOpen ] = React.useState<boolean>(false);
 
   const handleOpenModal = (task?: IAllTasks) => {
-    setSelectedTaskForModal?.(null);
+    setSelectedTaskForModal?.(null); //есть reset в RHF
 		setIsModalOpen?.(true);
     if (task) {
       setSelectedTaskForModal?.(task);

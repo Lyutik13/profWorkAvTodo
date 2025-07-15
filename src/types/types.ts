@@ -19,7 +19,7 @@ export interface IUserFullDesc extends IUser {
 }
 
 export interface ITaskInBoard {
-	id: number;
+	id: number | null;
 	title: string;
 	description: string;
 	priority: Priority;
@@ -28,7 +28,7 @@ export interface ITaskInBoard {
 }
 
 export interface IAllTasks extends ITaskInBoard {
-	boardId: number;
+	boardId: number | undefined;
 	boardName: string;
 }
 
