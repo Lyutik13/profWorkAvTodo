@@ -126,6 +126,14 @@ $green-light: #e2f6d3;
 	background-color: #f5f5f5;
 }
 
+.notFoundPage {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 576px) {
 	.boardItem {
 		flex-direction: row;

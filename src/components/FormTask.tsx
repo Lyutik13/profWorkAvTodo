@@ -10,13 +10,15 @@ import type { IAllTasks } from "../types/types";
 import { statusArr, priorityArr } from "../types/types";
 
 export const FormTask = () => {
-	const { selectedTaskForModal, boards, users, tasks, setIsModalOpen, setSelectedTaskForModal } =
+	const { selectedTaskForModal, boards, users, tasks, setIsModalOpen } =
 		React.useContext(AppContext);
 	const matchBoard = useMatch("/boards/:id");
 	const matchTasks = useMatch("/tasks");
 
-	const { control, handleSubmit } = useForm<IAllTasks>({
-		defaultValues: {
+	const { control, handleSubmit, reset } = useForm<IAllTasks>();
+
+	React.useEffect(() => {
+		reset({
 			boardId: selectedTaskForModal?.boardId,
 			boardName: selectedTaskForModal?.boardName,
 			title: selectedTaskForModal?.title,
@@ -25,8 +27,8 @@ export const FormTask = () => {
 			priority: selectedTaskForModal?.priority,
 			status: selectedTaskForModal?.status,
 			assignee: selectedTaskForModal?.assignee,
-		},
-	});
+		});
+	}, [reset, selectedTaskForModal]);
 
 	const onSubmit: SubmitHandler<IAllTasks> = (data: IAllTasks) => {
 		const boardIdInData = boards?.find((item) => item.name.includes(data.boardName))?.id;
@@ -34,11 +36,9 @@ export const FormTask = () => {
 		data.boardId = data.boardId ?? boardIdInData;
 		data.id = data.id ?? idData;
 
-		setSelectedTaskForModal?.(data);
-
 		setTimeout(() => {
 			setIsModalOpen?.(false);
-		}, 2000);
+		}, 1000);
 
 		console.log(data);
 		return data;
